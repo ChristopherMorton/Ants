@@ -684,18 +684,20 @@ function onTimerTick() {
    if (ticks == 30)
       snd_pianoloop.play();
 
-   if (ticks % 800 == 62) {
-      snd_bird3.currentTime = 0;
-      snd_bird3.play();
-   } else if (ticks % 800 == 243) {
-      snd_bird2.currentTime = 0;
-      snd_bird2.play();
-   } else if (ticks % 800 == 459) {
-      snd_bird1.currentTime = 0;
-      snd_bird1.play();
-   } else if (ticks % 800 == 672) {
-      snd_bird5.currentTime = 0;
-      snd_bird5.play();
+   if (!muted) {
+      if (ticks % 800 == 62) {
+         snd_bird3.currentTime = 0;
+         snd_bird3.play();
+      } else if (ticks % 800 == 243) {
+         snd_bird2.currentTime = 0;
+         snd_bird2.play();
+      } else if (ticks % 800 == 459) {
+         snd_bird1.currentTime = 0;
+         snd_bird1.play();
+      } else if (ticks % 800 == 672) {
+         snd_bird5.currentTime = 0;
+         snd_bird5.play();
+      }
    }
 
    if (victory == 0) {
