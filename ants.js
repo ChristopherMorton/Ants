@@ -1,6 +1,6 @@
 var canvas = $('#ants_canvas')[0]
 var context = canvas.getContext('2d');
-//var snd = new Audio('checker_click.wav');
+//var can_sound = new Audio('canwhistle.ogg');
 
 var WIDTH = 800, HEIGHT = 600;
 var GRID_WIDTH = 400, GRID_HEIGHT = 300;
@@ -115,10 +115,10 @@ function doAntAI( ant )
    if (dir == 3)
       x -= 1;
 
-   // Check for Raid
+   // Check for Raid or holes in the ground
    var x_grid = Math.floor( x / 10 );
    var y_grid = Math.floor( y / 10 );
-   if (raid_grid[x_grid][y_grid] > 0) {
+   if (raid_grid[x_grid][y_grid] > 0 || geometry[x_grid][y_grid] == 2) {
       ant[2] = randTurn();
       return;
    }
@@ -260,12 +260,17 @@ function newGame3() {
 function newGame4() {
    player_sandwich = [ 50, 50 ];
    enemy_sandwich = [ 350, 250 ];
-   nests = [ [ 150, 150 ], [ 280, 50 ] ];
+   nests = [ [ 200, 150 ] ];
    raid_max = 100;
    raid_cur = 100;
 
    level = 4;
    newGame();
+
+   for (var y = 10; y <= 20; ++y)
+      geometry[25][y] = 2;
+   for (var x = 15; x <= 25; ++x)
+      geometry[x][20] = 2;
 }
 
 function newGame5() {
@@ -313,6 +318,9 @@ function drawBoard() {
 
          if (geometry[x][y] == 1) {
             context.fillStyle = "rgba(215,215,215,255)";
+            context.fillRect( 20*x, 20*y, 20, 20 );
+         } else if (geometry[x][y] == 2) {
+            context.fillStyle = "rgba(115,115,115,255)";
             context.fillRect( 20*x, 20*y, 20, 20 );
          }
       }
@@ -381,12 +389,20 @@ var onMouseMove = function( e ) {
 var mouseUp = function( e ) {
    clicked = false;
 
+   //can_sound.pause();
+   //can_sound.currentTime = 0;
+
    var x_pix = e.pageX - canvas.offsetLeft;
    var y_pix = e.pageY - canvas.offsetTop;
 }
 
 var mouseDown = function( e ) {
    clicked = true;
+
+   //if (raid_cur != 0) {
+      //can_sound.currentTime = 0;
+      //can_sound.play();
+   //}
 
    var x_pix = e.pageX - canvas.offsetLeft;
    var y_pix = e.pageY - canvas.offsetTop;
