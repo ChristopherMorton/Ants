@@ -1,6 +1,10 @@
 var canvas = $('#ants_canvas')[0]
 var context = canvas.getContext('2d');
 //var can_sound = new Audio('canwhistle.ogg');
+var snd_bird1 = new Audio('Bird1.ogg');
+var snd_bird2 = new Audio('Bird2.ogg');
+var snd_bird3 = new Audio('Bird3.ogg');
+var snd_bird5 = new Audio('Bird5.ogg');
 
 var WIDTH = 800, HEIGHT = 600;
 var GRID_WIDTH = 400, GRID_HEIGHT = 300;
@@ -415,8 +419,23 @@ var ticks = 0;
 setInterval(onTimerTick, 33); // 33 milliseconds = ~ 30 frames per sec
 
 function onTimerTick() {
+   ticks++;
+
+   if (ticks % 800 == 62) {
+      snd_bird3.currentTime = 0;
+      snd_bird3.play();
+   } else if (ticks % 800 == 243) {
+      snd_bird2.currentTime = 0;
+      snd_bird2.play();
+   } else if (ticks % 800 == 459) {
+      snd_bird1.currentTime = 0;
+      snd_bird1.play();
+   } else if (ticks % 800 == 672) {
+      snd_bird5.currentTime = 0;
+      snd_bird5.play();
+   }
+
    if (victory == 0) {
-      ticks++;
 
       if (ticks % 13 == 0)
          degradeRaid();
