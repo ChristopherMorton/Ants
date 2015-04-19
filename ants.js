@@ -782,7 +782,7 @@ var total_images = 6;
 function addReadyImage() {
    images_ready++;
    if (images_ready == total_images) {
-      gameComplete();
+      newGame1();
       draw();
    }
 }
