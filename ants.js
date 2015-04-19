@@ -101,8 +101,10 @@ function searchTurn( x, y )
    var sand_dis = Math.abs(player_sandwich[0] - x) + Math.abs( player_sandwich[1] - y );
    var enemy_sand_dis = Math.abs(enemy_sandwich[0] - x) + Math.abs( enemy_sandwich[1] - y );
 
+   var goforplayer = sand_dis / ( sand_dis + enemy_sand_dis );
+
    var dx, dy;
-   if (sand_dis < enemy_sand_dis) {
+   if (goforplayer < Math.random()) {
       dx = player_sandwich[0] - x,
       dy = player_sandwich[1] - y;
    } else {
@@ -300,7 +302,7 @@ function newGame2() {
 function newGame3() {
    player_sandwich = [ 50, 50 ];
    enemy_sandwich = [ 350, 250 ];
-   nests = [ [ 60, 210 ], [ 145, 40 ], [ 10, 10 ], [ 205, 185 ] ];
+   nests = [ [ 60, 210 ], [ 145, 40 ], [ 12, 12 ], [ 205, 185 ] ];
    raid_max = 100;
    raid_cur = 100;
 
@@ -313,16 +315,16 @@ function newGame3() {
 function newGame4() {
    player_sandwich = [ 50, 50 ];
    enemy_sandwich = [ 350, 250 ];
-   nests = [ [ 200, 150 ], [ 150, 170 ], [ 170, 110 ] ];
+   nests = [ [ 210, 155 ], [ 160, 170 ], [ 180, 110 ] ];
    raid_max = 120;
    raid_cur = 120;
 
    level = 4;
    newGame();
 
-   for (var y = 10; y <= 20; ++y)
-      geometry[25][y] = 2;
-   for (var x = 15; x <= 25; ++x)
+   for (var y = 13; y <= 20; ++y)
+      geometry[26][y] = 2;
+   for (var x = 19; x <= 26; ++x)
       geometry[x][20] = 2;
 
    level_title.html("Level 4: Stuck in a Corner");
@@ -338,7 +340,7 @@ function newGame5() {
    level = 5;
    newGame();
 
-   level_title.html("Level 5: Surprise Attack");
+   level_title.html("Level 5: They Can Smell Your Fear");
 }
 
 function newGame6()
@@ -400,7 +402,7 @@ function newGame8() {
       }
    }
 
-   for (var y = 20 ; y < 28; ++y) {
+   for (var y = 19; y < 28; ++y) {
       geometry[29][y] = 2;
    }
    for (var x = 30 ; x < 38; ++x) {
@@ -419,17 +421,17 @@ function newGame8() {
 function newGame9() {
    player_sandwich = [ 50, 50 ];
    enemy_sandwich = [ 350, 250 ];
-   nests = [ [ 50, 230 ], [ 35, 255 ], [ 65, 255 ] ];
-   raid_max = 300;
-   raid_cur = 300;
+   nests = [ [ 50, 200 ], [ 25, 250 ], [ 75, 250 ] ];
+   raid_max = 250;
+   raid_cur = 250;
 
    level = 9;
    newGame();
 
-   for (var y = 8; y < RAID_GRID_HEIGHT; ++y) {
+   for (var y = 13; y < RAID_GRID_HEIGHT; ++y) {
       geometry[10][y] = 2;
       geometry[30][y] = 2;
-      geometry[20][y-8] = 2;
+      geometry[20][y-13] = 2;
    }
 
    level_title.html("Level 9: The Obstacle Course");
@@ -580,6 +582,13 @@ function drawInterface() {
    context.fillStyle = "rgba(195,195,0,255)";
    var raid_fill_y = 40 + ( raid_max - raid_cur ) * (560 / raid_max);
    context.fillRect( 802, raid_fill_y, 18, 600 );
+
+   context.fillStyle = "rgba(0,0,0,255)";
+   var raid_50 = (28000 / raid_max);
+   for (var mark = raid_50; mark < 560; mark += raid_50) {
+      context.fillRect( 800, (600 - mark), 20, 1 );
+
+   }
 
    if (muted)
       context.drawImage( muted_img, 800, 0 );
@@ -784,7 +793,7 @@ var total_images = 6;
 function addReadyImage() {
    images_ready++;
    if (images_ready == total_images) {
-      newGame1();
+      newGame3();
       draw();
    }
 }
